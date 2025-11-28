@@ -1,0 +1,62 @@
+{
+    "sourceFile": "src/Components/Google Login/GoogleLogin.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 11,
+            "patches": [
+                {
+                    "date": 1753878332550,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753878341403,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,12 @@\n \n const GoogleLogin = () => {\n   const { googleSignIn } = useAuth();\n   const googleProvider = new GoogleAuthProvider();\n-  \n+  googleProvider.setCustomParameters({\n+  prompt: \"select_account\"\n+});\n+\n   const navigate = useNavigate();\n   const location = useLocation();\n   const handleGoogleSignIn = () => {\n     googleSignIn(googleProvider)\n"
+                },
+                {
+                    "date": 1753878962247,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n   const location = useLocation();\n   const handleGoogleSignIn = () => {\n     googleSignIn(googleProvider)\n       .then((result) => {\n+        \n         toast.success(\"Successfully login with Google\");\n         navigate(location?.state ? location.state : \"/\");\n       })\n       .catch((error) => {\n"
+                },
+                {
+                    "date": 1753878980107,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,28 @@\n   const location = useLocation();\n   const handleGoogleSignIn = () => {\n     googleSignIn(googleProvider)\n       .then((result) => {\n-        \n+        const userInfo = {\n+  name: result.user.displayName,\n+  email: result.user.email,\n+  image: result.user.photoURL,\n+  uid: result.user.uid,\n+  role: \"user\", \n+};\n+\n+fetch(\"https://your-backend-server.com/users\", {\n+  method: \"POST\",\n+  headers: {\n+    \"Content-Type\": \"application/json\"\n+  },\n+  body: JSON.stringify(userInfo)\n+})\n+.then(res => res.json())\n+.then(data => {\n+  console.log(\"User info saved to MongoDB:\", data);\n+});\n+\n         toast.success(\"Successfully login with Google\");\n         navigate(location?.state ? location.state : \"/\");\n       })\n       .catch((error) => {\n"
+                },
+                {
+                    "date": 1753879100785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n   uid: result.user.uid,\n   role: \"user\", \n };\n \n-fetch(\"https://your-backend-server.com/users\", {\n+fetch(\"https://http://localhost:5000/users\", {\n   method: \"POST\",\n   headers: {\n     \"Content-Type\": \"application/json\"\n   },\n"
+                },
+                {
+                    "date": 1753879108768,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n   uid: result.user.uid,\n   role: \"user\", \n };\n \n-fetch(\"https://http://localhost:5000/users\", {\n+fetch(\"http://localhost:5000/users\", {\n   method: \"POST\",\n   headers: {\n     \"Content-Type\": \"application/json\"\n   },\n"
+                },
+                {
+                    "date": 1753880828824,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   const handleGoogleSignIn = () => {\n     googleSignIn(googleProvider)\n       .then((result) => {\n         const userInfo = {\n-  name: result.user.displayName,\n+          \n   email: result.user.email,\n   image: result.user.photoURL,\n   uid: result.user.uid,\n   role: \"user\", \n"
+                },
+                {
+                    "date": 1753880839178,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,10 +17,10 @@\n   const handleGoogleSignIn = () => {\n     googleSignIn(googleProvider)\n       .then((result) => {\n         const userInfo = {\n-          \n-  email: result.user.email,\n+          name: result.user.displayName,\n+          email: result.user.email,\n   image: result.user.photoURL,\n   uid: result.user.uid,\n   role: \"user\", \n };\n"
+                },
+                {
+                    "date": 1753880848020,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,10 @@\n       .then((result) => {\n         const userInfo = {\n           name: result.user.displayName,\n           email: result.user.email,\n-  image: result.user.photoURL,\n-  uid: result.user.uid,\n+          image: result.user.photoURL,\n+          uid: result.user.uid,\n   role: \"user\", \n };\n \n fetch(\"http://localhost:5000/users\", {\n"
+                },
+                {
+                    "date": 1753880853808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n           name: result.user.displayName,\n           email: result.user.email,\n           image: result.user.photoURL,\n           uid: result.user.uid,\n-  role: \"user\", \n+          role: \"user\", \n };\n \n fetch(\"http://localhost:5000/users\", {\n   method: \"POST\",\n"
+                },
+                {
+                    "date": 1753880859207,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n           email: result.user.email,\n           image: result.user.photoURL,\n           uid: result.user.uid,\n           role: \"user\", \n-};\n+   };\n \n fetch(\"http://localhost:5000/users\", {\n   method: \"POST\",\n   headers: {\n"
+                },
+                {
+                    "date": 1753880866289,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n           email: result.user.email,\n           image: result.user.photoURL,\n           uid: result.user.uid,\n           role: \"user\", \n-  };\n+};\n \n fetch(\"http://localhost:5000/users\", {\n   method: \"POST\",\n   headers: {\n"
+                }
+            ],
+            "date": 1753878332550,
+            "name": "Commit-0",
+            "content": "import React from \"react\";\nimport useAuth from \"../../Hooks/useAuth\";\nimport { GoogleAuthProvider } from \"firebase/auth\";\nimport { useLocation, useNavigate } from \"react-router-dom\";\nimport { FcGoogle } from \"react-icons/fc\";\nimport toast from \"react-hot-toast\";\n\nconst GoogleLogin = () => {\n  const { googleSignIn } = useAuth();\n  const googleProvider = new GoogleAuthProvider();\n  \n  const navigate = useNavigate();\n  const location = useLocation();\n  const handleGoogleSignIn = () => {\n    googleSignIn(googleProvider)\n      .then((result) => {\n        toast.success(\"Successfully login with Google\");\n        navigate(location?.state ? location.state : \"/\");\n      })\n      .catch((error) => {\n        toast.error(\"Something went wrong !!\");\n      });\n  };\n  return (\n    <div>\n      <div\n        onClick={handleGoogleSignIn}\n        className=\"flex cursor-pointer items-center justify-center mt-4 text-gray-600  border rounded-lg   hover:bg-gray-200 \"\n      >\n        <div className=\"px-4 py-2 text-2xl\">\n          <FcGoogle />\n        </div>\n\n        <span className=\"w-5/6 px-4 py-3 font-bold text-center\">\n          Sign in with Google\n        </span>\n      </div>\n    </div>\n  );\n};\n\nexport default GoogleLogin;\n"
+        }
+    ]
+}
